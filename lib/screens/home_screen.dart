@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/theme/app_colors.dart';
 import '../widgets/service_card.dart';
 import '../models/service.dart';
 import '../screens/worker_list_screen.dart';
 import '../theme/app_text.dart';
-import '../theme/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
