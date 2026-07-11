@@ -161,30 +161,44 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 20),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              margin: const EdgeInsets.symmetric(vertical: 25),
+              padding: const EdgeInsets.all(25),
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
                 gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                   colors: [Color(0xFF0F766E), Color(0xFF14B8A6)],
                 ),
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: Colors.red.shade100, width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 15,
-                    offset: const Offset(0, 8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Need a driver?",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Book trusted professionals in minutes!",
+                    style: TextStyle(
+                      color: Color.fromARGB(197, 255, 255, 255),
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.teal,
+                    ),
+                    child: const Text("Book Now"),
                   ),
                 ],
-              ),
-              child: const Center(
-                child: Text(
-                  "Book Now",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
               ),
             ),
             const SizedBox(height: 20),
