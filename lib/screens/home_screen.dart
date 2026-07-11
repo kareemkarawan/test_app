@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/theme/app_colors.dart';
 import '../widgets/service_card.dart';
 import '../models/service.dart';
+import '../screens/worker_list_screen.dart';
+import '../theme/app_text.dart';
+import '../theme/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,12 +13,21 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-
+String getGreeting() {
+  final hour = DateTime.now().hour;
+  if (hour < 12) {
+    return "Good Morning,";
+  } else if (hour < 18) {
+    return "Good Afteroon,";
+  } else {
+    return "Good Evening,";
+  }
+}
 
 class _HomeScreenState extends State<HomeScreen> {
   String searchText = "";
   String greeting = "Hello Kareem";
-  
+
   final service = [
     const Service(
       title: "Private Driver",
@@ -31,69 +44,176 @@ class _HomeScreenState extends State<HomeScreen> {
       description: "Hire trusted housekeepers for your family",
       icon: Icons.cleaning_services,
     ),
+    const Service(
+      title: "Chef",
+      description: "Hire trusted chefs for your family",
+      icon: Icons.restaurant,
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Household"),
-      ),
-
       body: Padding(
         padding: EdgeInsets.all(20),
         child: ListView(
           children: [
-            SizedBox(height:10),
-            Text("Find trusted help for your home."),
-            Text(greeting),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(getGreeting(), style: AppText.subtitle),
+
+                        const SizedBox(height: 5),
+
+                        Text("Kareem", style: AppText.heading),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.notifications_none),
+                        ),
+
+                        const CircleAvatar(
+                          radius: 20,
+                          child: Icon(Icons.person),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  "Find trusted help\nfor your home",
+                  style: AppText.heading,
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Search Services...",
+                      prefixIcon: const Icon(Icons.search),
+                      filled: true,
+                      fillColor: Colors.grey.shade300,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        searchText = value;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 15),
+                Stack(
+                  children: [
+                    const Icon(Icons.heart_broken, size: 35),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+
+                      child: Container(
+                        width: 11,
+                        height: 11,
+
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          border: Border.all(color: Colors.white, width: 1),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // InkWell(
+                //   onTap: () {
+                //     print("tapped");
+                //   },
+                //   child: Container(
+                //     padding: const EdgeInsets.all(15),
+                //     decoration: BoxDecoration(
+                //       color: Theme.of(context).colorScheme.primary,
+                //       borderRadius: BorderRadius.circular(15),
+                //     ),
+                //     child: const Icon(Icons.tune, color: Colors.white),
+                //   ),
+                // ),
+              ],
+            ),
+
             SizedBox(height: 30),
-            TextField(
-              decoration: InputDecoration(
-                hintText: "Search drivers",
-                prefixIcon: Icon(Icons.person),
-                border: UnderlineInputBorder(),
+            Text("Services", style: AppText.cardTitle),
+
+            const SizedBox(height: 20),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF0F766E), Color(0xFF14B8A6)],
+                ),
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: Colors.red.shade100, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 15,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
               ),
-              onChanged: (value) {
-                setState(() {
-                  searchText = value;
-                });
-              },
+              child: const Center(
+                child: Text(
+                  "Book Now",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
-            SizedBox(height:10),
-            Text("Search: $searchText",),
-            SizedBox(height:10),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  greeting = greeting == "Hello Kareem"
-                    ? "Welcome Back!"
-                    : "Hello Kareem";
-                });
-              },
-              child: Text("Toggle Greeting"),
-            ),
-            SizedBox(height:20),
+            const SizedBox(height: 20),
 
             ...service
-              .where((service) {
-                return service.title
-                  .toLowerCase()
-                  .contains(searchText.toLowerCase());
-              })
-              .map((service) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom:15),
-                child: ServiceCard(
-                  title: service.title,
-                  description: service.description,
-                  icon:service.icon,
-                  onTap: () {
-                    print(service.title);
-                  },
-                ),
-              );
-            }),
+                .where((service) {
+                  return service.title.toLowerCase().contains(
+                    searchText.toLowerCase(),
+                  );
+                })
+                .map((service) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: ServiceCard(
+                      title: service.title,
+                      description: service.description,
+                      icon: service.icon,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                WorkerListScreen(serviceName: service.title),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }),
           ],
         ),
       ),
