@@ -3,6 +3,8 @@ import '../widgets/service_card.dart';
 import '../models/service.dart';
 import '../screens/worker_list_screen.dart';
 import '../theme/app_text.dart';
+import '../models/worker.dart';
+import '../widgets/worker_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -46,6 +48,36 @@ class _HomeScreenState extends State<HomeScreen> {
       title: "Chef",
       description: "Hire trusted chefs for your family",
       icon: Icons.restaurant,
+    ),
+  ];
+  final fakeworkers = [
+    const Worker(
+      name: "Mohammad Salah",
+      profession: "Driver",
+      experience: 8,
+      rating: 4.9,
+      verified: true,
+    ),
+    const Worker(
+      name: "Zico",
+      profession: "Driver",
+      experience: 3,
+      rating: 4.7,
+      verified: false,
+    ),
+    const Worker(
+      name: "Mostafa Shobeir",
+      profession: "Chef",
+      experience: 2,
+      rating: 4.8,
+      verified: true,
+    ),
+    const Worker(
+      name: "Kareem Karawan",
+      profession: "Nanny",
+      experience: 23,
+      rating: 5.0,
+      verified: true,
     ),
   ];
 
@@ -226,6 +258,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 }),
+            SizedBox(height: 30),
+            Text("Featured Workers", style: AppText.cardTitle),
+            SizedBox(height: 20),
+
+            ...fakeworkers.map((fakeworkers) {
+              return WorkerCard(worker: fakeworkers);
+            }),
           ],
         ),
       ),

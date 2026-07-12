@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'navigation/main_navigation.dart';
+import 'theme/app_colors.dart';
 
 void main() {
   runApp(const HouseholdApp());
@@ -15,7 +16,14 @@ class HouseholdApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 90, 22, 18),),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+        scaffoldBackgroundColor: AppColors.background,
+        cardTheme: CardThemeData(
+          elevation: 3,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
       ),
       home: const MainNavigation(),
     );
